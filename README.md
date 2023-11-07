@@ -2,3 +2,4 @@
 
 Taken filters:
 - ENN (Lusi)
+- Mode Filter (JI)
