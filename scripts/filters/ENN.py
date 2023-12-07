@@ -1,32 +1,34 @@
 import pandas as pd
 import numpy as np
 import dataclasses
+from sklearn.neighbors import KNeighborsClassifier
 
 import sys
 sys.path.append('.')
 from Filter import Filter
 
-@dataclasses.dataclass(frozen=True, eq=False, init=False)
+@dataclasses.dataclass(frozen=False, eq=False, init=False)
 
 class ENN(Filter):
 
    # X: FArray
    # y: FArray
-    df: pd.core.frame.DataFrame
-    n_neighbors: int
+  #  data: pd.core.frame.DataFrame
+   # n_neighbors: int
 
-    #def __init__(self, df, n_neighbors = 5):
-       # self.df = df # dataframe that preserves the feature names
-     #   self.X, self.y = self.__get_values_and_labels__(df)
-      #  self.n_neighbors = n_neighbors
+    def __init__(self, df, n_neighbors = 5):
+        self.df = df # dataframe that preserves the feature names
+        self.X, self.y = self.__get_values_and_labels__(self.df)
+        self.n_neighbors = n_neighbors
 
-    def __post_init__(self):
-        object.__setattr__(self, 'df',  data)
-        object.__setattr__(self, 'X',  data.iloc[:,:-1].values)
-        object.__setattr__(self, 'y',  data.iloc[:,-1].values)
+  #  def __post_init__(self):
+      #  object.__setattr__(self, 'n_neighbors',  n_neighbors)
+#        object.__setattr__(self, 'data',  data)
+   #     object.__setattr__(self, 'X',  data.iloc[:,:-1].values)
+    #    object.__setattr__(self, 'y',  data.iloc[:,-1].values)
 
     
-    def __apply_filter__(self, X, y):
+    def __apply_filter__(self):
 
         N = len(self.df)
         clean_list = []
@@ -43,7 +45,7 @@ class ENN(Filter):
         return clean_list
 
     def noise_index(self):
-        self.clean_list = self.__apply_filter__(self, data)
+        self.clean_list = self.__apply_filter__()
         return self.clean_list
         
     def clean_samples(self):
