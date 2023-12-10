@@ -18,7 +18,7 @@ class Filter(abc.ABC):
         pass
 
     def clean_samples(self):
-        return self.data[self.data[clean_list]]
+        return self.data[self.clean_list]
 
     def noisy_samples(self):
         return self.data[np.invert(self.clean_list)]

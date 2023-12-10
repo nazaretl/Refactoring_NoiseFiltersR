@@ -1,3 +1,13 @@
+import pandas as pd
+import sys
+sys.path.append('scripts/')
+from utils import get_data, add_random_noise
+sys.path.append('scripts/filters')
+from ENN import ENN
+
+
+
+
 def test_ENN(noise_level = 0.2):
     df = pd.read_csv('https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv')
     X, y = get_data(df)
@@ -7,10 +17,8 @@ def test_ENN(noise_level = 0.2):
     df_noisy.iloc[:,-1] = y_noisy
     enn = ENN(df_noisy)
     clean_list = enn.noise_index()
+    noisy_ins = enn.noisy_samples()
     
     noisy = y == y_noisy
     acc = (noisy == clean_list).sum()/len(clean_list)
     print('The ENN filter has accuracy of {}'.format(round(acc,3)))
-
-if __name__ == "__main__":
-    test_ENN()

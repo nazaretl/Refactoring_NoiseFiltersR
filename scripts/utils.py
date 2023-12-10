@@ -1,6 +1,10 @@
 import pandas as pd
 import random 
 
+def get_data(df):
+    X = df.iloc[:,:-1]
+    y = df.iloc[:,-1]
+    return X, y
 
 def add_random_noise(y, noise_level = 0.2):
 
