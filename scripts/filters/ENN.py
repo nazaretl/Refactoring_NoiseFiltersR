@@ -16,9 +16,9 @@ class ENN(Filter):
   #  data: pd.core.frame.DataFrame
    # n_neighbors: int
 
-    def __init__(self, df, n_neighbors = 5):
-        self.df = df # dataframe that preserves the feature names
-        self.X, self.y = self.__get_values_and_labels__(self.df)
+    def __init__(self, data, n_neighbors = 5):
+        self.data = data # dataframe that preserves the feature names
+        self.X, self.y = self.__get_values_and_labels__()
         self.n_neighbors = n_neighbors
 
   #  def __post_init__(self):
@@ -30,7 +30,7 @@ class ENN(Filter):
     
     def __apply_filter__(self):
 
-        N = len(self.df)
+        N = len(self.data)
         clean_list = []
 
         knn = KNeighborsClassifier(n_neighbors=self.n_neighbors)
@@ -48,8 +48,3 @@ class ENN(Filter):
         self.clean_list = self.__apply_filter__()
         return self.clean_list
         
-    def clean_samples(self):
-        return self.df[self.df[self.clean_list]]
-
-    def noisy_samples(self):
-        return self.df[~self.df[self.clean_list]]
