@@ -11,4 +11,6 @@ def test_ENN(noise_level = 0.2):
     noisy = y == y_noisy
     acc = (noisy == clean_list).sum()/len(clean_list)
     print('The ENN filter has accuracy of {}'.format(round(acc,3)))
-test_ENN()
+
+if __name__ == "__main__":
+    test_ENN()
