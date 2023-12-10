@@ -1,7 +1,7 @@
 import abc
 import dataclasses
-import pandas as pd
 import numpy as np
+
 
 @dataclasses.dataclass(frozen=False, eq=False)
 class Filter(abc.ABC):
@@ -24,4 +24,4 @@ class Filter(abc.ABC):
         return self.data[np.invert(self.clean_list)]
 
     def __get_values_and_labels__(self):
-        return self.data.iloc[:,:-1].values, self.data.iloc[:,-1].values 
+        return self.data.iloc[:, :-1].values, self.data.iloc[:, -1].values
