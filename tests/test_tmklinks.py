@@ -1,9 +1,3 @@
-# import sys
-# sys.path.insert(0, 'C:/Users/jihci/OneDrive/Desktop/apc524/project/scripts')
-
-# from scripts.filters import tomeklinks
-
-# import scripts
 import pandas as pd
 import numpy as np
 from filters import tomeklinks
