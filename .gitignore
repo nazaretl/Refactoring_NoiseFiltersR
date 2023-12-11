@@ -1,4 +1,8 @@
-scripts/filters/.ipynb_checkpoints
-scripts/__pycache__
+src/filters/.ipynb_checkpoints
+src/__pycache__
 .ipynb_checkpoints
-scripts/filters/__pycache__
+src/filters/__pycache__
+.venv/
+tests/__init__.py
+tests/__pycache__
+__pycache__/

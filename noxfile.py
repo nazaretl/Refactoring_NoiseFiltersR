@@ -3,7 +3,7 @@ import nox
 nox.options.sessions = ["lint", "tests"]
 
 
-@nox.session(python=["3.11"])
+@nox.session()
 def tests(session: nox.Session) -> None:
     """
     Run the unit and regular tests.

@@ -55,3 +55,9 @@ def calculate_metrics(y_true, y_pred):
     )
     accuracy = accuracy_score(y_true, y_pred)
     return accuracy, precision, recall, fscore
+
+
+def get_data(df):
+    X = df.iloc[:, :-1]
+    y = df.iloc[:, -1]
+    return X, y
