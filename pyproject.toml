@@ -10,10 +10,10 @@ dependencies = ["pandas","numpy","scikit-learn"]
 
 
 [project.optional-dependencies]
-test = ["pytest", "matplotlib"]
+test = ["pytest", "matplotlib", "seaborn"]
 
 [tool.hatch]
 build.targets.wheel.packages = ["src"]
 
 [tool.pytest.ini_options]
-pythonpath = ["src","src/filters"]
+pythonpath = ["src","src/filters", "output"]

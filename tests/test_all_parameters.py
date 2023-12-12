@@ -10,7 +10,8 @@ from timeit import default_timer as timer
 
 
 @pytest.mark.parametrize("noise_level", (0.1, 0.2))
-@pytest.mark.parametrize("dataset", ("iris", "diabetes", "wine"))
+# "Iris", "Diabetes", "Wine"
+@pytest.mark.parametrize("dataset", ("Iris", "Diabetes", "Wine", "Magic", "DryBean"))
 @pytest.mark.parametrize("filter", (ENN, MODE))
 def test_all_parameters(noise_level, dataset, filter):
     df = load_data(dataset)
@@ -32,5 +33,6 @@ def test_all_parameters(noise_level, dataset, filter):
         [accuracy, precision, recall, fscore, end - start, noise_level]
     ).T.round(4)
     to_save.index = [filter.__class__.__name__]
-    print(to_save)
+    to_save["dataset"] = dataset
+
     to_save.to_csv("output/results.csv", mode="a", sep="\t", index=True, header=False)

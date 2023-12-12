@@ -1,21 +1,11 @@
 import numpy as np
 import dataclasses
 from sklearn.neighbors import KNeighborsClassifier
-
-# import sys
-
-# sys.path.append(".")
-# print(sys.path)
 from Filter import Filter
 
 
 @dataclasses.dataclass(frozen=False, eq=False, init=False)
 class ENN(Filter):
-    # X: FArray
-    # y: FArray
-    #  data: pd.core.frame.DataFrame
-    # n_neighbors: int
-
     def __init__(self, data, n_neighbors=5):
         self.data = data  # dataframe that preserves the feature names
         self.X, self.y = self.__get_values_and_labels__()

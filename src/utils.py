@@ -12,20 +12,27 @@ from sklearn.datasets import (
     load_breast_cancer,
 )
 
+from sklearn.datasets import fetch_california_housing
+
 
 def load_data(dataset):
     sets = {
-        "iris": load_iris,
-        "diabetes": load_diabetes,
-        "linnerud": load_linnerud,
-        "wine": load_wine,
-        "breast_cancer": load_breast_cancer,
+        "Iris": load_iris,
+        "Diabetes": load_diabetes,
+        "Wine": load_wine,
     }
-    dataset = sets[dataset]
-    di = dataset()
-    data = pd.DataFrame(
-        data=np.c_[di["data"], di["target"]], columns=di["feature_names"] + ["target"]
-    )
+    if dataset in list(sets.keys()):
+        dataset = sets[dataset]
+        di = dataset()
+        data = pd.DataFrame(
+            data=np.c_[di["data"], di["target"]],
+            columns=di["feature_names"] + ["target"],
+        )
+    else:
+        # for datasets Magic, Adult and DryBean
+        data = pd.read_csv(
+            "datasets/" + dataset + ".csv.gz", sep="\t", compression="zip"
+        )
     return data
 
 
