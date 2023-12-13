@@ -3,6 +3,7 @@ import pandas as pd
 from utils import load_data, get_values_labels, add_random_noise, calculate_metrics
 from ENN import ENN
 from Mode import MODE
+from HARF import HARF
 
 import pytest
 
@@ -12,7 +13,7 @@ from timeit import default_timer as timer
 @pytest.mark.parametrize("noise_level", (0.1, 0.2))
 # "Iris", "Diabetes", "Wine"
 @pytest.mark.parametrize("dataset", ("Iris", "Diabetes", "Wine", "Magic", "DryBean"))
-@pytest.mark.parametrize("filter", (ENN, MODE))
+@pytest.mark.parametrize("filter", (ENN, MODE, HARF))
 def test_all_parameters(noise_level, dataset, filter):
     df = load_data(dataset)
     X, y = get_values_labels(df)

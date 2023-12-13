@@ -53,17 +53,25 @@ class HARF(Filter):
         if self.y.shape[0] != self.data.shape[0]:
             raise ValueError(f"The number of rows in the data ({self.data.shape[0]}) and in the categorizations ({self.y.shape[0]}) must match")
         
-        self.__apply_filter__()
     
     def __apply_filter__(self):
 
         rand_forest = skensemble.RandomForestClassifier(n_estimators=self.ntrees, max_samples=self.nfolds, n_jobs=-1)
         
         rand_forest.fit(self.X, self.y)
-        prob = rand_forest.predict_proba(self.X)
+        prob = pd.DataFrame(rand_forest.predict_proba(self.X))
+        
 
         # Find the elements which do fit within the agreement limit
-        self.clean_list = (prob>self.agreementLevel).any(axis=1)
+        is_clean = pd.Series(len(self.data), dtype=bool)
+        for i in range(len(self.data)):
+            is_clean[i] = (prob.iloc[i,:]>self.agreementLevel).any()
+        return is_clean
+    
+    def noise_index(self):
+        self.clean_list = self.__apply_filter__()
+        return self.clean_list
+
         
 
 

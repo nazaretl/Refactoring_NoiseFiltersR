@@ -3,6 +3,7 @@ import pandas as pd
 from utils import get_data, add_random_noise, calculate_metrics
 from ENN import ENN
 from Mode import MODE
+from HARF import HARF
 
 import pytest
 
@@ -22,7 +23,7 @@ df_noisy.iloc[:, -1] = y_noisy
 
 def pytest_generate_tests(metafunc):
     if "filter" in metafunc.fixturenames:
-        list_filters = [ENN(df_noisy), MODE(df_noisy)]
+        list_filters = [ENN(df_noisy), MODE(df_noisy), HARF(df_noisy)]
         metafunc.parametrize("filter", list_filters)
 
 
