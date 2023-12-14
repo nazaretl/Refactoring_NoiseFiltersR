@@ -13,21 +13,22 @@ class Tomeklinks(Filter):
         self.delete = delete
     
     def __apply_filter__(self):
-        clean_ls = np.arange(len(self.data))
+        #clean_ls = np.arange(len(self.data))
+        clean_ls =  np.zeros(len(self.data), dtype=bool)
         class_count = self.data.iloc[:,-1].value_counts()
         # make sure there are only 2 classes
         if len(class_count) != 2:
             print(
                 f"only work on data in 2 classes. found {len(class_count)} classes instead"
             )
-            return clean_ls,[]
+            return clean_ls
         major, minor = class_count.index
         # return if balanced data but delete set to "major"
         if class_count[major] == class_count[minor] and delete == "major":
             print(
                 'balanced data so no cleaning is performed. consider setting delete to "both".'
             )
-            return clean_ls,[]
+            return clean_ls
         # find tomeklinks
         nns = NearestNeighbors(n_neighbors=1).fit(self.X, self.y).kneighbors()[1]
         dictnn = {}
@@ -45,17 +46,22 @@ class Tomeklinks(Filter):
                 p1,p2 = links[i]
                 if self.y[p2] == major:
                     links[i] = (p2,p1)
+                    clean_ls[p2] = True
+                else:
+                    clean_ls[p1] = True
             clean_ls = np.delete(clean_ls,[pair[0] for pair in links])
         elif self.delete == "both":
-            clean_ls = np.delete(clean_ls, sum(links,()))
+            for p1,p2 in links:
+                clean_ls[p1] = True
+                clean_ls[p2] = True
         else:
             print('invalid deletion strategy. choose from "major" or "both"')
-            return clean_ls,links
-        return clean_ls,links
+            return clean_ls
+        return clean_ls
 
     def noise_index(self):
-        self.clean_list, self.links = self.__apply_filter__()
+        self.clean_list= self.__apply_filter__()
         return self.clean_list
 
-    def noisy_samples(self):
-        return self.data.iloc[list(sum(self.links,()))]
+    # def noisy_samples(self):
+    #     return self.data.iloc[list(sum(self.links,()))]
