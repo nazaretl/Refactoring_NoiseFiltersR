@@ -11,7 +11,7 @@ class Tomeklinks(Filter):
     delete: str = "major"
 
     def __apply_filter__(self):
-        clean_ls =  np.zeros(len(self.data), dtype=bool)
+        clean_ls =  np.ones(len(self.data), dtype=bool)
         class_count = self.data.iloc[:,-1].value_counts()
         # make sure there are only 2 classes
         if len(class_count) != 2:
@@ -41,12 +41,12 @@ class Tomeklinks(Filter):
         if self.delete == "major":
             for p1,p2 in links:
                 if self.y[p2] == major:
-                    clean_ls[p2] = True
+                    clean_ls[p2] = False
                 else:
-                    clean_ls[p1] = True
+                    clean_ls[p1] = False
         elif self.delete == "both":
             for p1,p2 in links:
-                clean_ls[[p1,p2]] = True
+                clean_ls[[p1,p2]] = False
         else:
             print('invalid deletion strategy. choose from "major" or "both"')
             return clean_ls
