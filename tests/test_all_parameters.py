@@ -4,6 +4,7 @@ from utils import load_data, get_values_labels, add_random_noise, calculate_metr
 from ENN import ENN
 from Mode import MODE
 from HARF import HARF
+from Tomeklinks import Tomeklinks
 
 import pytest
 
@@ -11,9 +12,11 @@ from timeit import default_timer as timer
 
 
 @pytest.mark.parametrize("noise_level", (0.1, 0.2))
-# "Iris", "Diabetes", "Wine"
-@pytest.mark.parametrize("dataset", ("Iris", "Diabetes", "Wine", "Magic", "DryBean"))
-@pytest.mark.parametrize("filter", (ENN, MODE, HARF))
+@pytest.mark.parametrize(
+    "dataset",
+    ("Iris", "Diabetes", "Wine", "Magic", "DryBean"),
+)
+@pytest.mark.parametrize("filter", (ENN, MODE, HARF, Tomeklinks))
 def test_all_parameters(noise_level, dataset, filter):
     df = load_data(dataset)
     X, y = get_values_labels(df)
@@ -24,7 +27,7 @@ def test_all_parameters(noise_level, dataset, filter):
 
     start = timer()
     filter = filter(df_noisy)
-    clean_list = filter.noise_index()
+    clean_list = filter.remove_noise()
     end = timer()
     noisy_ins = filter.noisy_samples()
 

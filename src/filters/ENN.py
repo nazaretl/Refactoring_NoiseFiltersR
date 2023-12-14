@@ -2,20 +2,13 @@ import numpy as np
 import dataclasses
 from sklearn.neighbors import KNeighborsClassifier
 from Filter import Filter
+import pandas as pd
 
 
-@dataclasses.dataclass(frozen=False, eq=False, init=False)
+@dataclasses.dataclass(frozen=False)
 class ENN(Filter):
-    def __init__(self, data, n_neighbors=5):
-        self.data = data  # dataframe that preserves the feature names
-        self.X, self.y = self.__get_values_and_labels__()
-        self.n_neighbors = n_neighbors
-
-    #  def __post_init__(self):
-    #  object.__setattr__(self, 'n_neighbors',  n_neighbors)
-    #        object.__setattr__(self, 'data',  data)
-    #     object.__setattr__(self, 'X',  data.iloc[:,:-1].values)
-    #    object.__setattr__(self, 'y',  data.iloc[:,-1].values)
+    data: pd.DataFrame | None = None
+    n_neighbors: int = 5
 
     def __apply_filter__(self):
         N = len(self.data)
@@ -33,7 +26,3 @@ class ENN(Filter):
             most_frequent_label = values[counts == counts.max()]
             clean_list.append([most_frequent_label == own_label][0][0])
         return clean_list
-
-    def noise_index(self):
-        self.clean_list = self.__apply_filter__()
-        return self.clean_list

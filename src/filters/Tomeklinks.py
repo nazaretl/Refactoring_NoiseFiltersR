@@ -4,16 +4,13 @@ import dataclasses
 from sklearn.neighbors import NearestNeighbors
 from Filter import Filter
 
-@dataclasses.dataclass(frozen=False, eq=False, init=False)
-class Tomeklinks(Filter):
 
-    def __init__(self, df, delete="major"):
-        self.data = df
-        self.X, self.y = self.__get_values_and_labels__()
-        self.delete = delete
-    
+@dataclasses.dataclass(frozen=False)
+class Tomeklinks(Filter):
+    data: pd.DataFrame | None = None
+    delete: str = "major"
+
     def __apply_filter__(self):
-        #clean_ls = np.arange(len(self.data))
         clean_ls =  np.zeros(len(self.data), dtype=bool)
         class_count = self.data.iloc[:,-1].value_counts()
         # make sure there are only 2 classes
@@ -42,26 +39,15 @@ class Tomeklinks(Filter):
             dictnn[nn] = i
         # drop tomeklinks
         if self.delete == "major":
-            for i in range(len(links)):
-                p1,p2 = links[i]
+            for p1,p2 in links:
                 if self.y[p2] == major:
-                    links[i] = (p2,p1)
                     clean_ls[p2] = True
                 else:
                     clean_ls[p1] = True
-            clean_ls = np.delete(clean_ls,[pair[0] for pair in links])
         elif self.delete == "both":
             for p1,p2 in links:
-                clean_ls[p1] = True
-                clean_ls[p2] = True
+                clean_ls[[p1,p2]] = True
         else:
             print('invalid deletion strategy. choose from "major" or "both"')
             return clean_ls
         return clean_ls
-
-    def noise_index(self):
-        self.clean_list= self.__apply_filter__()
-        return self.clean_list
-
-    # def noisy_samples(self):
-    #     return self.data.iloc[list(sum(self.links,()))]

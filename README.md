@@ -1,7 +1,5 @@
-# Refactoring_NoiseFiltersR
+# Refactoring of the NoiseFiltersR package for the identification of mislabeled instances in tabular data
 
-Taken filters:
-- ENN (Lusi)
-- Mode Filter (JI)
-- HARF Filter (Saad)
-- TomekLinks (Jiayi)
+Supervised machine learning recently gained growing importance in various fields of research. To train reliable models, data scientists need credible data, which is not always available. A particularly hard and widespread problem deteriorating the performance of methods are mislabeled samples (C. G. Northcutt, Athalye, and Mueller 2021). Common sources of mislabeling are weakly defined classes, labels that change their meaning, unsuitable annotators, or ambiguous guidelines for labeling. Because mislabeling lowers prediction quality, it is essential for scientists to be able to identify wrong labels efficiently and effectively before actually starting the learning process.
+NoiseFiltersR is an R package that contains 30 different methods for the identification of noisy labels (Morales et al. 2017). As the package has been developed several years ago and is not being maintained, many of the filters do not show optimal performance, having extremely high execution time or memory requirements. In this project, we aimed at setting up an architecture that would allow easy reimplementation of those filters in python. Besides, we reimplemented four filters ENN, MODE, HARF and TomekLinks and provided extensive testing and evaluation of the results. Our modular architecture allows addition uncomplicated addition of new filters as well as integration and unit tests.
+
