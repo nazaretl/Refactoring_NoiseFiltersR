@@ -9,7 +9,7 @@ def test_shapes():
 
     df = load_data('Iris')
     filtered_iris = MODE(df)
-    noise_index = filtered_iris.remove_noise()
+    noise_index = filtered_iris.find_noise()
 
     assert filtered_iris.clean_samples().shape[1] == df.shape[1] 
     assert filtered_iris.noisy_samples().shape[1] == df.shape[1] 
