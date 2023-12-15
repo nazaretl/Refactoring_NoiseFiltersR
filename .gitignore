@@ -5,5 +5,5 @@ src/filters/__pycache__
 .venv/
 tests/__init__.py
 tests/__pycache__
-__pycache__/
+**/__pycache__/
 **/.DS_store

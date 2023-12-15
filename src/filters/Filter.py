@@ -9,18 +9,6 @@ class Filter(abc.ABC):
     def __apply_filter__(self):
         pass
 
-    @abc.abstractmethod
-    def noisy_samples(self):
-        pass
-
-    @abc.abstractmethod
-    def clean_samples(self):
-        pass
-
-    @abc.abstractmethod
-    def remove_noise(self):
-        pass
-
     def __get_values_and_labels__(self):
         return self.data.iloc[:, :-1].values, self.data.iloc[:, -1].values
 
