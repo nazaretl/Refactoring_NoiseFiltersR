@@ -7,6 +7,24 @@ import pandas as pd
 
 @dataclasses.dataclass(frozen=False)
 class ENN(Filter):
+
+    """
+       Applies the Edited Nearest Neighbors (ENN) filter. 
+       Based on the ENN filter from NoiseFiltersR 
+       (https://rdrr.io/cran/NoiseFiltersR/man/ENN.html) 
+    
+        Args:
+          df (pandas.DataFrame): a pandas dataframe. 
+                        The last column must contain noisy labels
+          n_neighbors (int): number of neighbors to be considered
+          
+        Returns:
+          list: a boolean list with True if instance is consedered
+                  to be clean, False otherwise
+    """
+
+
+    
     data: pd.DataFrame | None = None
     n_neighbors: int = 5
 
