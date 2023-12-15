@@ -21,7 +21,7 @@ class Tomeklinks(Filter):
             return clean_ls
         major, minor = class_count.index
         # return if balanced data but delete set to "major"
-        if class_count[major] == class_count[minor] and delete == "major":
+        if class_count[major] == class_count[minor] and self.delete == "major":
             print(
                 'balanced data so no cleaning is performed. consider setting delete to "both".'
             )
