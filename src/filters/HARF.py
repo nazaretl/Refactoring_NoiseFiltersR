@@ -3,10 +3,6 @@
 Ensemble-based filter for removing label noise from a dataset as a
 preprocessing step of classification. Does not reclassify data.
 
-NOTE: Class names in classes get truncated to their first character, can cause issues
-
-TODO: Formalize docstrings
-
 """
 from Filter import Filter
 import pandas as pd
@@ -18,17 +14,26 @@ import dataclasses
 class HARF(Filter):
 
     """
-    TODO: Formalize docstrings and explanations
+    Ensemble-based filter for removing label noise from a dataset as a
+    preprocessing step of classification. Does not reclassify data.
 
-    Parameters
+    Attributes
     ----------
 
-    data : pandas.DataFrame
+    data: pandas.DataFrame
         The two-dimensional numerical data to be filtered, organized such that each column is
         a property and each row is a datapoint. The last column should contain the classification of
         each datapoint.
 
+    nfolds: int, default=10
+        The number of segments to subdivide the input datapoints in the random forest training.
 
+    agreementLevel: float, default=0.7
+        The probability cutoff below which a datapoint is classified as noise if the random forest fitting does not 
+        indicate a probabalistic classification that is likely enough.
+
+    ntrees: int, default=500
+        The number of trees in the random forest.
 
     """
 
@@ -54,6 +59,7 @@ class HARF(Filter):
             )
 
     def __apply_filter__(self):
+        
         rand_forest = skensemble.RandomForestClassifier(
             n_estimators=self.ntrees, max_samples=self.nfolds, n_jobs=-1
         )
@@ -62,7 +68,7 @@ class HARF(Filter):
         prob = pd.DataFrame(rand_forest.predict_proba(self.X))
 
         # Find the elements which do fit within the agreement limit
-        is_clean = pd.Series(len(self.data), dtype=bool)
+        is_clean = []
         for i in range(len(self.data)):
-            is_clean[i] = (prob.iloc[i, :] > self.agreementLevel).any()
+            is_clean.append((prob.iloc[i, :] > self.agreementLevel).any())
         return is_clean
