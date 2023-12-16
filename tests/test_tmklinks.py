@@ -11,6 +11,6 @@ def test1():
     df2["label"] = [1 for _ in range(len(df2))]
     dftot = pd.concat([df1, df2], ignore_index=True)
     tmkfilter = Tomeklinks(dftot,delete='major')
-    ind = tmkfilter.find_noise()
+    ind = tmkfilter.remove_noise()
     noise = tmkfilter.noisy_samples()
     assert list(noise.index.values) == [10,17]
