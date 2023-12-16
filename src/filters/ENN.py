@@ -14,6 +14,7 @@ import pandas as pd
 
 @dataclasses.dataclass(frozen=False)
 class ENN(Filter):
+
     """
     Ensemble-based filter for removing label noise from a dataset as a
     preprocessing step of classification. Does not reclassify data.
@@ -29,6 +30,7 @@ class ENN(Filter):
     n_neigbors: int, default=5
         The number of neighbor groups to assign to input data in classification.
     """
+
     data: pd.DataFrame | None = None
     n_neighbors: int = 5
 
