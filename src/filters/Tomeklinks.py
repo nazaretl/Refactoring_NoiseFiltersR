@@ -1,3 +1,9 @@
+"""TomekLinks Filter
+    Similarity-based filter for removing label noise from a 
+    dataset as a preprocessing step of classification
+
+"""
+
 import pandas as pd
 import numpy as np
 import dataclasses
@@ -7,6 +13,24 @@ from Filter import Filter
 
 @dataclasses.dataclass(frozen=False)
 class Tomeklinks(Filter):
+    """
+    Similarity-based filter for removing label noise from a 
+    dataset as a preprocessing step of classification
+
+    Attributes
+    ----------
+
+    data: pandas.DataFrame
+        The two-dimensional numerical data to be filtered, organized such that each column is
+        a property and each row is a datapoint. The last column should contain the classification of
+        each datapoint.
+
+    delete: {"major", "both"}
+        Decision keyword on deletion of noisy data. 
+        “major” means to remove only the data point from the majority class for a more balanced result,
+        “both” means to remove both points
+
+    """
     data: pd.DataFrame | None = None
     delete: str = "major"
 

@@ -1,3 +1,8 @@
+"""Mode Filter
+Similarity-based filter for removing or repairing label noise from a dataset as 
+a preprocessing step of classification.
+
+"""
 import numpy as np
 import dataclasses
 from scipy.spatial import distance
@@ -9,6 +14,16 @@ import pandas as pd
 
 @dataclasses.dataclass(frozen=False)
 class MODE(Filter):
+    """
+    Attributes
+    ----------
+    data : pandas.DataFrame
+        The two-dimensional numerical data to be filtered, organized such that each column is
+        a property and each row is a datapoint. The last column should contain the classification of
+        each datapoint.
+
+    """
+
     data: pd.DataFrame | None = None
 
     def __calculate_beta__(self):
